@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dallae PC Agent</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid #1e2433;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e5e7eb;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo img {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: #e5e7eb; }
+    .nav-feat-btn {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color .15s;
+    }
+    .nav-feat-btn:hover { color: #e5e7eb; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+      text-align: center;
+    }
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      margin: 0 auto 24px;
+      display: block;
+    }
+    .version-badge {
+      display: inline-block;
+      background: #1e2433;
+      border: 1px solid #2d3748;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 40px;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+    }
+    .dl-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .15s, transform .1s;
+    }
+    .btn:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-primary { background: #4f46e5; color: #fff; }
+    .btn-ghost {
+      background: #1e2433;
+      color: #e5e7eb;
+      border: 1px solid #2d3748;
+    }
+
+    /* ── INSTALL ── */
+    .install {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+    .install h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b7280;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .step-n {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #1e2433;
+      border: 1px solid #2d3748;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body p {
+      color: #9ca3af;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+    .step-body strong { color: #e5e7eb; font-weight: 500; display: block; margin-bottom: 2px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid #1e2433;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer p { color: #4b5563; font-size: 0.8rem; }
+    footer a { color: #6b7280; text-decoration: none; }
+    footer a:hover { color: #e5e7eb; }
+
+    /* ── FEATURES OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+    .overlay.open { display: flex; align-items: center; justify-content: center; }
+    .overlay-box {
+      background: #111827;
+      border: 1px solid #1e2433;
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 480px;
+      width: calc(100% - 48px);
+    }
+    .overlay-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .overlay-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .close-btn:hover { color: #e5e7eb; }
+    .feat-list { display: flex; flex-direction: column; gap: 16px; }
+    .feat-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .feat-icon {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .feat-item p { color: #6b7280; font-size: 0.85rem; line-height: 1.5; margin-top: 2px; }
+    .feat-item strong { color: #e5e7eb; font-size: 0.875rem; display: block; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">
+    <img src="dallae_icon.png" alt="Dallae" onerror="this.style.display='none'" />
+    Dallae PC Agent
+  </span>
+  <div class="nav-links">
+    <button class="nav-feat-btn" onclick="openFeatures()">주요 기능</button>
+    <a href="privacy.html">개인정보처리방침</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <img class="hero-icon" src="dallae_icon.png" alt="Dallae PC Agent" onerror="this.style.display='none'" />
+  <div class="version-badge">최신 버전 v0.1.0</div>
+  <h1>Dallae PC Agent</h1>
+  <div class="dl-row">
+    <button class="btn btn-primary" onclick="dlPc()">🖥 PC 다운로드</button>
+    <button class="btn btn-ghost" onclick="dlApk()">📱 Android APK</button>
+  </div>
+</section>
+
+<section class="install">
+  <h2>설치 방법</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <strong>PC 설치</strong>
+        <p>PC 다운로드 버튼 클릭 → 다운로드 후 실행파일(EXE) 실행.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <strong>Android APK 설치</strong>
+        <p>APK 파일을 폰으로 전송 → "알 수 없는 앱 허용" → 설치.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <strong>모바일 연동</strong>
+        <p>모바일 앱 설정 탭 → PC IP 주소 입력 (PC 앱 화면에서 확인).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Dallae PC Agent &copy; 2026</p>
+  <p>문의: <a href="mailto:clus0109@gmail.com">clus0109@gmail.com</a> 또는 프로그램 내 챗봇</p>
+</footer>
+
+<!-- 주요 기능 오버레이 -->
+<div class="overlay" id="overlay" onclick="closeOnBg(event)">
+  <div class="overlay-box">
+    <div class="overlay-header">
+      <h2>주요 기능</h2>
+      <button class="close-btn" onclick="closeFeatures()">✕</button>
+    </div>
+    <div class="feat-list">
+      <div class="feat-item">
+        <span class="feat-icon">🌙</span>
+        <div>
+          <strong>취침 모드</strong>
+          <p>음소거 → 화면 끄기. 창 유지 또는 전부 닫기 선택 가능.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">☀️</span>
+        <div>
+          <strong>기상 모드</strong>
+          <p>화면 켜기 → 2초 후 음소거 해제 → 지정 앱 자동 실행.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">🔊</span>
+        <div>
+          <strong>원격 음소거</strong>
+          <p>모바일에서 PC 음소거 / 해제 즉시 제어.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">🎮</span>
+        <div>
+          <strong>게임 세팅</strong>
+          <p>전적검색 사이트 → 게임 런처 순서로 자동 실행.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">💬</span>
+        <div>
+          <strong>AI 문의 챗봇</strong>
+          <p>기능 문의, 버그 신고, 기능 제안. Claude 기반 AI 에이전트.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">🔄</span>
+        <div>
+          <strong>자동 업데이트</strong>
+          <p>새 버전 알림 후 설정 보존 상태로 업데이트.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PC_URL  = "https://raw.githubusercontent.com/Utobit/dallae-baepo-releases/main/DallaePC.exe";
+  const APK_URL = "https://raw.githubusercontent.com/Utobit/dallae-baepo-releases/main/DallaePC.apk";
+
+  function dlPc()  { window.location.href = PC_URL; }
+  function dlApk() { window.location.href = APK_URL; }
+
+  function openFeatures()  { document.getElementById('overlay').classList.add('open'); }
+  function closeFeatures() { document.getElementById('overlay').classList.remove('open'); }
+  function closeOnBg(e)    { if (e.target === document.getElementById('overlay')) closeFeatures(); }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeatures(); });
+</script>
+</body>
+</html>
