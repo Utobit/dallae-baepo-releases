@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.0/DallaeBaepo.exe",
-  "apk_url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.0/DallaeBaepo.apk",
-  "notes": "초기 배포 — 취침/기상/음소거/볼륨/게임세팅"
+  "version": "0.1.1",
+  "url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.1/DallaePC.exe",
+  "apk_url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.1/DallaeBaepo.apk",
+  "notes": "달래 에이전트 모드 전환 + 앱 아이콘 + LinaAI 피드백 연동"
 }
