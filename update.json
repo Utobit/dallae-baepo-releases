@@ -1,6 +1,7 @@
 {
-  "version": "0.1.1",
-  "url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.1/DallaePC.exe",
-  "apk_url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.1/DallaeBaepo.apk",
-  "notes": "달래 에이전트 모드 전환 + 앱 아이콘 + LinaAI 피드백 연동"
+  "version": "0.1.2",
+  "apk_version": "0.1.2",
+  "url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.2/DallaePC.exe",
+  "apk_url": "https://github.com/Utobit/dallae-baepo-releases/releases/download/v0.1.2/DallaePC.apk",
+  "notes": "채팅 문의 자동 전달 (AI 판단 + 재확인) + 수면기록 버튼 + 채팅 로그 저장"
 }
