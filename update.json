@@ -1,7 +1,7 @@
 {
   "version": "0.1.3",
-  "apk_version": "1.0.4",
+  "apk_version": "1.0.5",
   "url": "https://github.com/Utobit/dallae-baepo-releases/raw/main/DallaePC.exe",
   "apk_url": "https://github.com/Utobit/dallae-baepo-releases/raw/main/DallaePC.apk",
-  "notes": "수면기록 달력 추가 + 달래아이콘 + 자동업데이트"
+  "notes": "홈 위젯 추가 (취침/기상) + 수면기록 달력"
 }
